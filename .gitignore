@@ -1,0 +1,5 @@
+.terraform/
+*terraform*state*
+*.log
+secrets*
+*.auto.pkrvars.hcl
