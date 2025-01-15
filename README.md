@@ -129,6 +129,7 @@ Build the image:
 
 ```bash
 source secrets.sh
+rm -f ubuntu-packer-manifest.json
 CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=ubuntu.init.log \
   packer init .
 CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=ubuntu.log \
@@ -138,6 +139,13 @@ CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=ubuntu.log \
 **NB** When packer fails you might have to manually delete the created
 resources, e.g., EC2 instance, EC2 AMI, EC2 snapshot, EC2 key pair, and
 VPC security group.
+
+Show the created packer manifest and the created AMI ID:
+
+```bash
+jq . ubuntu-packer-manifest.json
+jq -r '.builds[-1].artifact_id | split(":") | .[1]' ubuntu-packer-manifest.json
+```
 
 Destroy the image build VPC:
 

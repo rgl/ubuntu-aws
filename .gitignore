@@ -4,3 +4,4 @@ tmp/
 *.log
 secrets*
 *.auto.pkrvars.hcl
+ubuntu-packer-manifest.json

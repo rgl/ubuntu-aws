@@ -111,4 +111,9 @@ build {
       "generalize.sh",
     ]
   }
+
+  post-processor "manifest" {
+    output     = "ubuntu-packer-manifest.json"
+    strip_path = true
+  }
 }
