@@ -190,6 +190,8 @@ systemctl status snap.amazon-ssm-agent.amazon-ssm-agent
 journalctl -u snap.amazon-ssm-agent.amazon-ssm-agent
 sudo ssm-cli get-instance-information
 sudo ssm-cli get-diagnostics
+sudo docker compose version
+sudo docker version
 sudo docker info
 sudo docker ps
 sudo docker run --rm hello-world
