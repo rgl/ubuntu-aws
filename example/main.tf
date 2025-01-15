@@ -107,6 +107,7 @@ data "aws_caller_identity" "current" {}
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami
 data "aws_ami" "ubuntu" {
   most_recent = true
+  owners      = ["self"]
   filter {
     name   = "name"
     values = [var.image_name]
