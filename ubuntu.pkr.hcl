@@ -23,6 +23,18 @@ variable "image_name" {
 }
 
 source "amazon-ebs" "ubuntu" {
+  # NB you can list the current images with aws cli as, e.g.:
+  #     aws ec2 describe-images \
+  #       --region eu-west-1 \
+  #       --owners 099720109477 \
+  #       --filters \
+  #         'Name=name,Values=ubuntu/images/*/ubuntu-*-22.04-amd64-server-*' \
+  #         'Name=state,Values=available' \
+  #       --query 'Images[*].[CreationDate,Name,ImageId]' \
+  #       --no-cli-pager \
+  #       --output json \
+  #       | jq -r 'sort_by(.[0]) | reverse | .[] | @tsv' \
+  #       | head -3
   # e.g. ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20250112
   source_ami_filter {
     most_recent = true
