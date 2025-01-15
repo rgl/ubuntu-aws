@@ -1,3 +1,36 @@
+# see https://github.com/hashicorp/terraform
+terraform {
+  required_version = "1.10.4"
+  required_providers {
+    # see https://registry.terraform.io/providers/hashicorp/aws
+    # see https://github.com/hashicorp/terraform-provider-aws
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.83.1"
+    }
+    # see https://registry.terraform.io/providers/hashicorp/local
+    # see https://github.com/hashicorp/terraform-provider-local
+    local = {
+      source  = "hashicorp/local"
+      version = "2.5.2"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.region
+  default_tags {
+    tags = {
+      Owner = "rgl"
+    }
+  }
+}
+
+variable "region" {
+  type    = string
+  default = "eu-west-1"
+}
+
 variable "vpc_name" {
   type    = string
   default = "rgl-ubuntu"
@@ -27,7 +60,7 @@ data "aws_availability_zones" "available" {
 # see https://github.com/terraform-aws-modules/terraform-aws-vpc
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "5.13.0"
+  version = "5.17.0"
 
   name            = var.vpc_name
   azs             = local.azs
@@ -38,7 +71,8 @@ module "vpc" {
 
 resource "local_file" "packer_vpc" {
   content  = <<-EOF
-  subnet_id = "${module.vpc.public_subnets[0]}"
+  region    = ${jsonencode(var.region)}
+  subnet_id = ${jsonencode(module.vpc.public_subnets[0])}
   EOF
   filename = "${path.module}/../vpc.auto.pkrvars.hcl"
 }

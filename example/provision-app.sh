@@ -3,7 +3,7 @@ set -euxo pipefail
 
 # install node LTS.
 # see https://github.com/nodesource/distributions#debinstall
-NODE_MAJOR_VERSION=20
+NODE_MAJOR_VERSION=22
 apt-get update
 apt-get install -y ca-certificates curl gnupg
 mkdir -p /etc/apt/keyrings

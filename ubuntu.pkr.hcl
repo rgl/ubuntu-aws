@@ -2,7 +2,7 @@ packer {
   required_plugins {
     # see https://github.com/hashicorp/packer-plugin-amazon
     amazon = {
-      version = ">= 1.3.3"
+      version = "1.3.4"
       source  = "github.com/hashicorp/amazon"
     }
   }
@@ -23,11 +23,12 @@ variable "image_name" {
 }
 
 source "amazon-ebs" "ubuntu" {
+  # e.g. ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20250112
   source_ami_filter {
     most_recent = true
     owners      = ["099720109477"] # Canonical.
     filters = {
-      name                = "ubuntu/images/*/ubuntu-jammy-22.04-amd64-server-*"
+      name                = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }

@@ -1,6 +1,6 @@
 # see https://github.com/hashicorp/terraform
 terraform {
-  required_version = "1.9.6"
+  required_version = "1.10.4"
   required_providers {
     # see https://registry.terraform.io/providers/hashicorp/random
     random = {
@@ -17,7 +17,7 @@ terraform {
     # see https://github.com/hashicorp/terraform-provider-aws
     aws = {
       source  = "hashicorp/aws"
-      version = "5.69.0"
+      version = "5.83.1"
     }
   }
 }
@@ -72,7 +72,7 @@ data "aws_availability_zones" "available" {
 # see https://github.com/terraform-aws-modules/terraform-aws-vpc
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "5.13.0"
+  version = "5.17.0"
 
   name            = var.name_prefix
   azs             = local.azs

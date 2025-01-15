@@ -221,3 +221,9 @@ for snapshot_id in $snapshot_ids; do
     --snapshot-id "$snapshot_id"
 done
 ```
+
+List this repository dependencies (and which have newer versions):
+
+```bash
+GITHUB_COM_TOKEN='YOUR_GITHUB_PERSONAL_TOKEN' ./renovate.sh
+```
