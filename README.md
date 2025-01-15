@@ -220,13 +220,13 @@ image_id="$(aws ec2 describe-images \
   --filters "Name=name,Values=$PKR_VAR_image_name" \
   --query "Images[*].ImageId" \
   --output text)"
-snapshot_ids="$(aws ec2 describe-images \
+readarray -t snapshot_ids < <(aws ec2 describe-images \
   --image-ids "$image_id" \
   --query "Images[*].BlockDeviceMappings[*].Ebs.SnapshotId" \
-  --output text)"
+  --output text)
 aws ec2 deregister-image \
   --image-id "$image_id"
-for snapshot_id in $snapshot_ids; do
+for snapshot_id in "${snapshot_ids[@]}"; do
   aws ec2 delete-snapshot \
     --snapshot-id "$snapshot_id"
 done
