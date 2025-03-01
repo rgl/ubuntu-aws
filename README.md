@@ -171,10 +171,25 @@ After VM initialization is done (check the instance system log for cloud-init en
 while ! wget -qO- "http://$(terraform output --raw app_ip_address)/test"; do sleep 3; done
 ```
 
-And open a shell inside the VM:
+Get the instance sshd public keys, convert them to the knowns hosts format,
+and show their fingerprints:
 
 ```bash
-ssh "ubuntu@$(terraform output --raw app_ip_address)"
+./aws-ssm-get-sshd-public-keys.sh \
+  "$(terraform output --raw app_instance_id)" \
+  | tail -1 \
+  | jq -r .sshd_public_keys \
+  | sed "s/^/$(terraform output --raw app_ip_address) /" \
+  > app-ssh-known-hosts.txt
+ssh-keygen -l -f app-ssh-known-hosts.txt
+```
+
+Open a shell inside the VM and execute some commands:
+
+```bash
+ssh \
+  -o UserKnownHostsFile=app-ssh-known-hosts.txt \
+  "ubuntu@$(terraform output --raw app_ip_address)"
 cloud-init status --long --wait
 tail /var/log/cloud-init-output.log
 cat /etc/machine-id

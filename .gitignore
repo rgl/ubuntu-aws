@@ -5,3 +5,4 @@ tmp/
 secrets*
 *.auto.pkrvars.hcl
 ubuntu-packer-manifest.json
+example/app-ssh-known-hosts.txt

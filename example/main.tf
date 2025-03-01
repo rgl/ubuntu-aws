@@ -97,6 +97,10 @@ variable "admin_password" {
 # NB when you run make terraform-apply this is set from the TF_VAR_admin_ssh_key_data environment variable, which comes from the ~/.ssh/id_rsa.pub file.
 variable "admin_ssh_key_data" {}
 
+output "app_instance_id" {
+  value = aws_instance.app.id
+}
+
 output "app_ip_address" {
   value = aws_eip.app.public_ip
 }
@@ -212,6 +216,14 @@ resource "aws_iam_role" "app" {
 resource "aws_iam_role_policy_attachment" "app" {
   role       = aws_iam_role.app.name
   policy_arn = aws_iam_policy.app.arn
+}
+
+# see https://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent.html
+# see https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
+resource "aws_iam_role_policy_attachment" "app_ssm_agent" {
+  role       = aws_iam_role.app.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy
