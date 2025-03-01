@@ -143,7 +143,7 @@ main(await getInstanceIdentity(), process.argv[2]);
 EOF
 # see https://www.npmjs.com/package/@aws-sdk/client-ssm
 # renovate: datasource=npm depName=@aws-sdk/client-ssm
-npm_aws_sdk_client_ssm_version='3.574.0'
+npm_aws_sdk_client_ssm_version='3.750.0'
 cat >package.json <<EOF
 {
     "name": "app",
